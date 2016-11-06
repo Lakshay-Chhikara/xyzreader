@@ -99,6 +99,7 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         final Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +122,6 @@ public class ArticleDetailFragment extends Fragment implements
         });
 
         final LinearLayout layoutHeader = (LinearLayout) mRootView.findViewById(R.id.meta_bar);
-        final Rect layoutHeaderRect = new Rect();
         final Rect toolbarRect = new Rect();
         toolbar.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
@@ -144,6 +144,7 @@ public class ArticleDetailFragment extends Fragment implements
                         @Override
                         public void onScrollChange(NestedScrollView v, int scrollX, int scrollY,
                                                    int oldScrollX, int oldScrollY) {
+                            Rect layoutHeaderRect = new Rect();
                             layoutHeader.getGlobalVisibleRect(layoutHeaderRect);
                             //upwards
                             if (oldScrollY < scrollY) {
