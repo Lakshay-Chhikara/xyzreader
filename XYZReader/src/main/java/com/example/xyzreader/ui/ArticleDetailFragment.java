@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ShareCompat;
@@ -168,11 +166,12 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+        final TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
+        final TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
-        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+        final TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        final LinearLayout bodyBackground = (LinearLayout) mRootView.findViewById(R.id.body_background);
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -200,6 +199,13 @@ public class ArticleDetailFragment extends Fragment implements
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(mMutedColor);
+                                Palette.Swatch vibrantSwatch = p.getVibrantSwatch();
+                                if (vibrantSwatch != null) {
+                                    bodyBackground.setBackgroundColor(vibrantSwatch.getRgb());
+                                    titleView.setTextColor(vibrantSwatch.getTitleTextColor());
+                                    bylineView.setTextColor(vibrantSwatch.getTitleTextColor());
+                                    bodyView.setTextColor(vibrantSwatch.getBodyTextColor());
+                                }
                             }
                         }
 
